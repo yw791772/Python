@@ -1,4 +1,5 @@
 from util.util_graph_like import Matrix
+import collections
 class S1():
 	def isValid(self,r,c,row,col):
 		if 0 <= r < row and 0 <= c < col:
@@ -112,28 +113,56 @@ class S3():
 				g[stop] = g.get(stop, []) + [bus]
 		return g
 
-	def busRoute(self, b2s):
+	def busRoute(self, input):
+		b2s, s, e = input['b2s'], input['start'], input['end']
 		s2b = self.buildStopToBus(b2s)
-		print(s2b)
-		return
+		visited_stop, visited_bus = set(), set()
+		q, step = collections.deque(), 1
+		q.append(s)
+		while q:
+			n = len(q)
+			for i in range(n):
+				current = q.popleft()
+				if current == e:
+					return step
+				visited_stop.add(current)
+				for bus in s2b[current]:
+					if bus not in visited_bus:
+						for stop in b2s[bus]:
+							if stop not in visited_bus:
+								if stop == e:
+									return step
+								q.append(stop)
+			step += 1
+
+		return step
 
 def testBusRoute():
-	input = [
-		[1, 2, 7, 10, 15, 23],
-		[3, 6, 7, 14, 16, 21],
-		[4, 5, 8, 17, 18, 23, 35],
-		[1, 6, 9, 11, 17, 19, 22],
-		[2, 3, 4, 5, 7, 20, 24, 26, 28]
-	]
+	input = {
+		'b2s':[
+			[1, 2, 7, 10, 15, 23],
+			[3, 6, 7, 14, 16, 21],
+			[4, 5, 8, 17, 18, 23, 35],
+			[1, 6, 9, 11, 17, 19, 22],
+			[2, 3, 4, 5, 7, 20, 24, 26, 28]
+		],
+		'start': 1,
+		'end': 35
+	}
 
 	s3 = S3()
 	res = s3.busRoute(input)
 	print(res)
+
+class S4():
+	
+def testGameOfLife():
+
 
 def main():
 	#testNumberOfIsland()
 	#testGraphGeneration()
 	#testAlianDictionary()
 	#testSpiralMatrix()
-	testBusRoute()
+	#testBusRoute()
 main()
