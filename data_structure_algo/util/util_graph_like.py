@@ -1,6 +1,6 @@
 import random
 class Matrix():
-	def __init__(self, setting):
+	def __init__(self, setting = None):
 		self.default = ['row', 'col', 'is_directed']
 		self.config = { 'row': 5, 'col': 5, 'is_directed': True }
 		if setting:

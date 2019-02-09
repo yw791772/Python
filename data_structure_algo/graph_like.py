@@ -154,7 +154,7 @@ def testBusRoute():
 	res = s3.busRoute(input)
 	print(res)
 
-class S4(object):
+class S4():
 	def minMalwareSpread(self, graph, initial):
 		def dfs(node, visited):
 			visited.add(node)
@@ -196,11 +196,54 @@ def testMalware():
 	init = [6,0,1,2]
 	print(s.minMalwareSpread(m, init))
 
+class S5():
+	def game_of_life(self, b):
+		ad = [(-1,0),(-1,1),(0,1),(1,1),(1,0),(1,-1),(0,-1),(-1,-1)]
+		def checkNeighbors(i, j):
+			count = 0
+			for ad_i, ad_j in ad:
+				n_i, n_j = i+ad_i, j+ad_j
+				if 0 <= n_i < len(b) and 0 <= n_j < len(b[0]) and (b[n_i][n_j]%2) == 1:
+					count += 1
+			return count
+		'''[
+			[1,0,0],
+			[0,1,0],
+			[0,1,0]
+		]'''
+		for i in range(len(b)):
+			for j in range(len(b[0])):
+				count = checkNeighbors(i, j)
+				if b[i][j] == 1:
+					if count < 2 or count > 3:
+						b[i][j] = 3
+				elif b[i][j] == 0:
+					if count == 3:
+						b[i][j] = 2
+		for i in range(len(b)):
+			for j in range(len(b[0])):
+				if b[i][j] == 3:
+					b[i][j] = 0
+				elif b[i][j] == 2:
+					b[i][j] = 1
+		return b
+
+def test_game_of_life():
+	s = S5()
+	m_obj = Matrix()
+	m = m_obj.randomMatrixWithZeroOne()
+	print('Before:')
+	print(m)
+	print('After:')
+	print(s.game_of_life(m))
+
+
 def main():
 	#testNumberOfIsland()
 	#testGraphGeneration()
 	#testAlianDictionary()
 	#testSpiralMatrix()
 	#testBusRoute()
-	testMalware()
+	#testMalware()
+	#test_game_of_life()
 main()
