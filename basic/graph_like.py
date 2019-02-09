@@ -154,10 +154,47 @@ def testBusRoute():
 	res = s3.busRoute(input)
 	print(res)
 
-class S4():
-	
-def testGameOfLife():
+class S4(object):
+	def minMalwareSpread(self, graph, initial):
+		def dfs(node, visited):
+			visited.add(node)
+			for i in range(len(graph)):
+				if i != node and i not in visited and graph[node][i]:
+					dfs(i, visited)
 
+		if len(initial) == 0:
+			return None
+		res = initial[0]
+		mini = -1
+		while initial:
+			c_node = initial[0]
+			visited, old = set(), set(initial)
+			dfs(c_node, visited)
+
+			interset = visited & old
+			if len(interset) == 1:
+				num_of_nodes = len(visited)
+				if num_of_nodes > mini:
+					res = c_node
+					mini = num_of_nodes
+				elif num_of_modes == mini:
+					res = min(res, c_node)
+			else:
+				if mini <= 0:
+					mini = 0
+					res = min(res, sorted(interset)[0])
+			new = old - interset
+			initial = list(new)
+		return res      
+	
+def testMalware():
+	s = S4()
+	config = {'row': 7, 'col': 7, 'is_directed': False}
+	m_obj = Matrix(config)
+	m = m_obj.randomGraphInMatrix()
+	print(m)
+	init = [6,0,1,2]
+	print(s.minMalwareSpread(m, init))
 
 def main():
 	#testNumberOfIsland()
@@ -165,4 +202,5 @@ def main():
 	#testAlianDictionary()
 	#testSpiralMatrix()
 	#testBusRoute()
+	testMalware()
 main()
