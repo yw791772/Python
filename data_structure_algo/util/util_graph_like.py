@@ -51,6 +51,13 @@ class Matrix():
 		self.__displayConfig()
 		return m
 
+	def randomMatrix(self):
+		m = self.__initialMatrix()
+		for i in range(self.config['row']):
+			for j in range(self.cofig['col']):
+				m[i][j] = random.randint(1, 1000)
+		return m
+
 	def generateSpiralMatrix(self):
 		m = self.__initialMatrix()
 		n, maxi = 1, self.config['row'] * self.config['col']
